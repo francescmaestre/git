@@ -1,9 +1,7 @@
 file(GLOB SRC_FILES
-  *.cpp
-  *.h
-  *.ui
+  include/*.h
+  src/*.cpp
 )
-
 
 add_library(git STATIC
     ${SRC_FILES}
@@ -12,7 +10,8 @@ add_library(git STATIC
 target_link_libraries(git
     PUBLIC
     Qt::Core
-    PRIVATE
+    Qt::Widgets
     QLogger
 )
-target_include_directories(git PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+target_include_directories(git PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
