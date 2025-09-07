@@ -3,7 +3,6 @@
 #include <QSharedPointer>
 
 #include <RevisionFiles.h>
-#include <WipRevisionInfo.h>
 
 #include <optional>
 
