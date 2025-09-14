@@ -2,7 +2,7 @@
 
 #include <GitBase.h>
 #include <GitWip.h>
-#include <QLogger.h>
+#include <QLogger>
 #include <RevisionFiles.h>
 
 #include <QFile>

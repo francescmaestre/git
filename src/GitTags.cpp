@@ -1,7 +1,7 @@
 #include <GitAsyncProcess.h>
 #include <GitBase.h>
 #include <GitTags.h>
-#include <QLogger.h>
+#include <QLogger>
 
 #include <QRegularExpression>
 

@@ -4,7 +4,7 @@
 #include <GitConfig.h>
 #include <GitSubmodules.h>
 
-#include <QLogger.h>
+#include <QLogger>
 
 using namespace QLogger;
 

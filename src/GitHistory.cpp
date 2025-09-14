@@ -3,7 +3,7 @@
 #include <GitBase.h>
 #include <GitConfig.h>
 
-#include <QLogger.h>
+#include <QLogger>
 
 #include <QStringLiteral>
 

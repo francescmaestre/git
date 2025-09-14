@@ -4,7 +4,7 @@
 #include <GitConfig.h>
 #include <GitRemote.h>
 
-#include <QLogger.h>
+#include <QLogger>
 
 #   include <QRegularExpression>
 

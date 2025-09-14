@@ -3,7 +3,7 @@
 #include <QSettings>
 #include <QTextStream>
 
-#include <QLogger.h>
+#include <QLogger>
 
 using namespace QLogger;
 

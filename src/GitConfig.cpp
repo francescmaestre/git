@@ -4,7 +4,7 @@
 #include <GitBase.h>
 #include <GitCloneProcess.h>
 
-#include <QLogger.h>
+#include <QLogger>
 
 using namespace QLogger;
 

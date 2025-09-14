@@ -1,7 +1,7 @@
 #include "GitSubmodules.h"
 
 #include <GitBase.h>
-#include <QLogger.h>
+#include <QLogger>
 
 #include <QFile>
 #include <QTemporaryFile>

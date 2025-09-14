@@ -1,7 +1,7 @@
 #include "GitPatches.h"
 
 #include <GitBase.h>
-#include <QLogger.h>
+#include <QLogger>
 
 using namespace QLogger;
 

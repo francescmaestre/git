@@ -1,7 +1,7 @@
 #include <GitBase.h>
 #include <GitSubtree.h>
 
-#include <QLogger.h>
+#include <QLogger>
 
 using namespace QLogger;
 
