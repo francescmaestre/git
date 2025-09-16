@@ -44,13 +44,13 @@ GitExecResult GitRemote::pushCommit(const QString &sha, const QString &remoteBra
                             .arg(remote.success ? remote.output : QString("origin"), sha, remoteBranch));
 }
 
-GitExecResult GitRemote::pull(bool updateSubmodulesOnPull)
+GitExecResult GitRemote::pull()
 {
    QLog_Debug("Git", QString("Executing pull"));
 
    auto ret = mGitBase->run("git pull");
 
-   if (ret.success && updateSubmodulesOnPull)
+   if (ret.success)
    {
       QScopedPointer<GitSubmodules> git(new GitSubmodules(mGitBase));
       const auto updateRet = git->submoduleUpdate(QString());
@@ -66,12 +66,12 @@ GitExecResult GitRemote::pull(bool updateSubmodulesOnPull)
    return ret;
 }
 
-bool GitRemote::fetch(bool autoPrune)
+bool GitRemote::fetch()
 {
    QLog_Debug("Git", QString("Executing fetch with prune"));
 
    const auto cmd
-       = QString("git fetch --all --tags --force %1").arg(autoPrune ? QString("--prune --prune-tags") : QString());
+       = QString("git fetch --all --tags --force");
    const auto ret = mGitBase->run(cmd).success;
 
    return ret;
