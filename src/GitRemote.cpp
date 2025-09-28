@@ -70,8 +70,7 @@ bool GitRemote::fetch()
 {
    QLog_Debug("Git", QString("Executing fetch with prune"));
 
-   const auto cmd
-       = QString("git fetch --all --tags --force");
+   const auto cmd = QString("git fetch --all --tags --force");
    const auto ret = mGitBase->run(cmd).success;
 
    return ret;

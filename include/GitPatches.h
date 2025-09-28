@@ -33,6 +33,7 @@ class GitPatches
 {
 public:
    explicit GitPatches(const QSharedPointer<GitBase> &gitBase);
+
    GitExecResult exportPatch(const QStringList &shaList);
    GitExecResult applyPatch(const QString &fileName, bool asCommit = false);
    GitExecResult stagePatch(const QString &fileName) const;

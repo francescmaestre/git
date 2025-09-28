@@ -6,7 +6,7 @@
 
 #include <QLogger>
 
-#   include <QRegularExpression>
+#include <QRegularExpression>
 
 using namespace QLogger;
 

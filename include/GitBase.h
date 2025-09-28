@@ -31,19 +31,12 @@ public:
    explicit GitBase(const QString &workingDirectory);
 
    GitExecResult run(const QString &cmd) const;
-
    QString getWorkingDir() const;
-
    void setWorkingDir(const QString &workingDir);
-
    QString getGitDir() const;
-
    QString getTopLevelRepo(const QString &path) const;
-
    void updateCurrentBranch();
-
    QString getCurrentBranch();
-
    GitExecResult getLastCommit() const;
 
 protected:

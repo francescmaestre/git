@@ -34,6 +34,7 @@ signals:
 
 public:
    explicit GitAsyncProcess(const QString &workingDir);
+
    GitExecResult run(const QString &command) override;
 
 private:

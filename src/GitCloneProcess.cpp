@@ -22,8 +22,8 @@ void GitCloneProcess::onReadyStandardError()
 
       if (errStr.contains("fatal:"))
       {
-          mCanceling = true;
-          emit signalCloningFailure(-1, errStr);
+         mCanceling = true;
+         emit signalCloningFailure(-1, errStr);
       }
       else if (!errStr.startsWith("remote: "))
       {

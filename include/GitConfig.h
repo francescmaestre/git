@@ -35,7 +35,6 @@ struct GitUserInfo
 {
    QString mUserName;
    QString mUserEmail;
-
    bool isValid() const;
 };
 

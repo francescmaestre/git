@@ -41,6 +41,7 @@ public:
    };
 
    explicit GitLocal(const QSharedPointer<GitBase> &gitBase);
+
    bool isInCherryPickMerge() const;
    GitExecResult cherryPickCommit(const QString &sha) const;
    GitExecResult cherryPickAbort() const;

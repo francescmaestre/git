@@ -33,6 +33,7 @@ class GitSubmodules
 {
 public:
    GitSubmodules(const QSharedPointer<GitBase> &gitBase);
+
    QVector<QString> getSubmodules();
    bool submoduleAdd(const QString &url, const QString &name);
    bool submoduleUpdate(const QString &submodule);

@@ -33,6 +33,7 @@ struct GitExecResult
 {
    GitExecResult() = default;
    GitExecResult(bool ret, QString v);
+
    GitExecResult(const QPair<bool, QString> &result);
    GitExecResult &operator=(const QPair<bool, QString> &result);
    bool success = false;

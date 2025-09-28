@@ -33,6 +33,7 @@ class GitBranches
 {
 public:
    GitBranches(const QSharedPointer<GitBase> &gitBase);
+
    GitExecResult createBranchFromAnotherBranch(const QString &oldName, const QString &newName);
    GitExecResult checkoutNewLocalBranchFromAnotherBranch(const QString &oldName, const QString &newName) const;
    GitExecResult createBranchAtCommit(const QString &commitSha, const QString &branchName);

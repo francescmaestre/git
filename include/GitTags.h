@@ -49,6 +49,5 @@ public:
 
 private:
    QSharedPointer<GitBase> mGitBase;
-
    void onRemoteTagsRecieved(GitExecResult result);
 };

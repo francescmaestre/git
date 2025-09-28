@@ -31,6 +31,7 @@ class GitRequestorProcess : public AGitProcess
 {
 public:
    explicit GitRequestorProcess(const QString &workingDir);
+
    GitExecResult run(const QString &command) override;
 
 private:

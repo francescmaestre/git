@@ -109,7 +109,7 @@ QStringList splitArgList(const QString &cmd)
 }
 }
 
-QStringList AGitProcess::mExtraPaths{};
+QStringList AGitProcess::mExtraPaths {};
 
 AGitProcess::AGitProcess(const QString &workingDir)
    : mWorkingDirectory(workingDir)
@@ -141,7 +141,7 @@ void AGitProcess::onCancel()
    waitForFinished();
 }
 
-void AGitProcess::setAdditionalPaths(const QStringList& paths)
+void AGitProcess::setAdditionalPaths(const QStringList &paths)
 {
    mExtraPaths = paths;
 }
