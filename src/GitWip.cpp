@@ -1,8 +1,8 @@
-#include "GitWip.h"
+#include <GitWip.h>
 
 #include <GitBase.h>
 
-#include <QLogger.h>
+#include <QLogger>
 
 #include <QFile>
 

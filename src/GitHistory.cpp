@@ -1,9 +1,9 @@
-#include "GitHistory.h"
+#include <GitHistory.h>
 
 #include <GitBase.h>
 #include <GitConfig.h>
 
-#include <QLogger.h>
+#include <QLogger>
 
 #include <QStringLiteral>
 
@@ -12,6 +12,17 @@ using namespace QLogger;
 GitHistory::GitHistory(const QSharedPointer<GitBase> &gitBase)
    : mGitBase(gitBase)
 {
+}
+
+GitExecResult GitHistory::getCommitBody(const QString &sha)
+{
+   QLog_Debug("Git", QString("Getting body for commit: {%1}").arg(sha));
+
+   const auto cmd = QString("git log -1 --format=%b %1").arg(sha);
+
+   QLog_Trace("Git", QString("Getting body for commit: {%1}").arg(cmd));
+
+   return mGitBase->run(cmd);
 }
 
 GitExecResult GitHistory::blame(const QString &file, const QString &commitFrom)

@@ -1,8 +1,8 @@
-#include "GitStashes.h"
+#include <GitStashes.h>
 
 #include <GitBase.h>
 
-#include <QLogger.h>
+#include <QLogger>
 
 using namespace QLogger;
 

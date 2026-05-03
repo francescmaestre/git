@@ -1,12 +1,12 @@
-#include "GitBranches.h"
+#include <GitBranches.h>
 
 #include <GitBase.h>
 #include <GitConfig.h>
 #include <GitRemote.h>
 
-#include <QLogger.h>
+#include <QLogger>
 
-#   include <QRegularExpression>
+#include <QRegularExpression>
 
 using namespace QLogger;
 

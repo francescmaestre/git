@@ -3,10 +3,9 @@
 /****************************************************************************************
  ** GitQlient is an application to manage and operate one or several Git repositories. With
  ** GitQlient you will be able to add commits, branches and manage all the options Git provides.
- ** Copyright (C) 2021  Francesc Martinez
+ ** Copyright (C) 2021  Francesc Maestre
  **
- ** LinkedIn: www.linkedin.com/in/cescmm/
- ** Web: www.francescmm.com
+ ** LinkedIn: https://www.linkedin.com/in/francescmaestre/
  **
  ** This program is free software; you can redistribute it and/or
  ** modify it under the terms of the GNU Lesser General Public
@@ -26,6 +25,7 @@
 #include <QProcess>
 
 #include <GitExecResult.h>
+#include <GitRepoConfig.h>
 
 class AGitProcess : public QProcess
 {
@@ -35,17 +35,17 @@ signals:
    void procDataReady(const QByteArray &data);
 
 public:
-   explicit AGitProcess(const QString &workingDir);
+   explicit AGitProcess(GitRepoConfig config);
 
    virtual GitExecResult run(const QString &command) = 0;
    void onCancel();
-   static void setAdditionalPaths(const QStringList& paths);
 
 protected:
+   GitRepoConfig mConfig;
    QString mRunOutput;
-   QString mWorkingDirectory;
    QString mErrorOutput;
    QString mCommand;
+   QStringList mExtraPaths;
    bool mRealError = false;
    bool mCanceling = false;
    bool execute(const QString &command);
@@ -53,6 +53,4 @@ protected:
 
 private:
    void onReadyStandardOutput();
-
-   static QStringList mExtraPaths;
 };

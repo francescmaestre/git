@@ -1,7 +1,7 @@
 #include <GitAsyncProcess.h>
 #include <GitBase.h>
 #include <GitTags.h>
-#include <QLogger.h>
+#include <QLogger>
 
 #include <QRegularExpression>
 
@@ -31,7 +31,7 @@ bool GitTags::getRemoteTags() const
 
    QLog_Trace("Git", QString("Getting remote tags: {%1}").arg(cmd));
 
-   const auto p = new GitAsyncProcess(mGitBase->getWorkingDir());
+   const auto p = new GitAsyncProcess(mGitBase->config());
    connect(p, &GitAsyncProcess::signalDataReady, this, &GitTags::onRemoteTagsRecieved);
 
    const auto ret = p->run(cmd);

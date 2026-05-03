@@ -1,4 +1,4 @@
-#include "GitExecResult.h"
+#include <GitExecResult.h>
 
 GitExecResult::GitExecResult(bool ret, QString v)
    : success(ret)

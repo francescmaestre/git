@@ -1,20 +1,19 @@
-#include "GitBase.h"
+#include <GitBase.h>
 
 #include <GitAsyncProcess.h>
 #include <GitSyncProcess.h>
 
-#include <QLogger.h>
+#include <QLogger>
 
 using namespace QLogger;
 
 #include <QDir>
 #include <QFileInfo>
 
-GitBase::GitBase(const QString &workingDirectory)
-   : mWorkingDirectory(workingDirectory)
-   , mGitDirectory(mWorkingDirectory + "/.git")
+GitBase::GitBase(GitRepoConfig config)
+   : mConfig(std::move(config))
 {
-   QFileInfo fileInfo(mGitDirectory);
+   QFileInfo fileInfo(mConfig.gitDirectory);
 
    if (fileInfo.isFile())
    {
@@ -23,25 +22,30 @@ GitBase::GitBase(const QString &workingDirectory)
       if (f.open(QIODevice::ReadOnly))
       {
          auto path = f.readAll().split(':').last().trimmed();
-         mGitDirectory = mWorkingDirectory + "/" + path;
+         mConfig.gitDirectory = mConfig.workingDirectory + "/" + path;
          f.close();
       }
    }
 }
 
+GitRepoConfig GitBase::config() const
+{
+   return mConfig;
+}
+
 QString GitBase::getWorkingDir() const
 {
-   return mWorkingDirectory;
+   return mConfig.workingDirectory;
 }
 
 void GitBase::setWorkingDir(const QString &workingDir)
 {
-   mWorkingDirectory = workingDir;
+   mConfig.workingDirectory = workingDir;
 }
 
 QString GitBase::getGitDir() const
 {
-   return mGitDirectory;
+   return mConfig.gitDirectory;
 }
 
 QString GitBase::getTopLevelRepo(const QString &path) const
@@ -57,9 +61,14 @@ QString GitBase::getTopLevelRepo(const QString &path) const
    return ret.success ? ret.output.trimmed() : QString {};
 }
 
+QString GitBase::gitLocation() const
+{
+   return mConfig.gitLocation;
+}
+
 GitExecResult GitBase::run(const QString &cmd) const
 {
-   GitSyncProcess p(mWorkingDirectory);
+   GitSyncProcess p(mConfig);
 
    const auto ret = p.run(cmd);
    const auto runOutput = ret.output;

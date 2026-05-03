@@ -1,9 +1,8 @@
-#include "AGitProcess.h"
+#include <AGitProcess.h>
 
-#include <QSettings>
 #include <QTextStream>
 
-#include <QLogger.h>
+#include <QLogger>
 
 using namespace QLogger;
 
@@ -25,29 +24,31 @@ QString loginApp()
 
 void restoreSpaces(QString &newCmd, const QChar &sepChar)
 {
+   const bool dollarPaired = newCmd.count(u'$') % 2 == 0;
+   const bool dquotePaired = newCmd.count(u'"') % 2 == 0;
+   const bool squotePaired = newCmd.count(u'\'') % 2 == 0;
+
    QChar quoteChar;
-   auto replace = false;
-   const auto newCommandLength = newCmd.length();
+   bool replace = false;
 
-   for (int i = 0; i < newCommandLength; ++i)
+   for (int i = 0, len = newCmd.length(); i < len; ++i)
    {
-      const auto c = newCmd[i];
+      const QChar c = newCmd[i];
 
-      if (!replace && (c == "$"[0] || c == '\"' || c == '\'') && (newCmd.count(c) % 2 == 0))
+      if (!replace)
       {
-         replace = true;
-         quoteChar = c;
+         if ((c == u'$' && dollarPaired) || (c == u'"' && dquotePaired) || (c == u'\'' && squotePaired))
+         {
+            replace = true;
+            quoteChar = c;
+         }
          continue;
       }
 
-      if (replace && (c == quoteChar))
-      {
+      if (c == quoteChar)
          replace = false;
-         continue;
-      }
-
-      if (replace && c == sepChar)
-         newCmd[i] = QChar(' ');
+      else if (c == sepChar)
+         newCmd[i] = u' ';
    }
 }
 
@@ -109,14 +110,12 @@ QStringList splitArgList(const QString &cmd)
 }
 }
 
-QStringList AGitProcess::mExtraPaths{};
-
-AGitProcess::AGitProcess(const QString &workingDir)
-   : mWorkingDirectory(workingDir)
+AGitProcess::AGitProcess(GitRepoConfig config)
+   : mConfig(std::move(config))
 {
    qRegisterMetaType<GitExecResult>("GitExecResult");
 
-   setWorkingDirectory(mWorkingDirectory);
+   setWorkingDirectory(mConfig.workingDirectory);
 
    // Clone the current environment
    auto env = QProcessEnvironment::systemEnvironment();
@@ -139,11 +138,6 @@ void AGitProcess::onCancel()
    mCanceling = true;
 
    waitForFinished();
-}
-
-void AGitProcess::setAdditionalPaths(const QStringList& paths)
-{
-   mExtraPaths = paths;
 }
 
 void AGitProcess::onReadyStandardOutput()
@@ -178,10 +172,8 @@ bool AGitProcess::execute(const QString &command)
       // Append /opt/homebrew/bin to PATH
       env << QString("PATH=%1:%2").arg(e.value("PATH"), mExtraPaths.join(":"));
 
-      const auto gitAlternative = QSettings().value("gitLocation", "").toString();
-
       setEnvironment(env);
-      setProgram(gitAlternative.isEmpty() ? arguments.takeFirst() : gitAlternative);
+      setProgram(mConfig.gitLocation.isEmpty() ? arguments.takeFirst() : mConfig.gitLocation);
       setArguments(arguments);
       start();
 

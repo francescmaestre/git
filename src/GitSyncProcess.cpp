@@ -1,10 +1,10 @@
-#include "GitSyncProcess.h"
+#include <GitSyncProcess.h>
 
 #include <QTemporaryFile>
 #include <QTextStream>
 
-GitSyncProcess::GitSyncProcess(const QString &workingDir)
-   : AGitProcess(workingDir)
+GitSyncProcess::GitSyncProcess(GitRepoConfig config)
+   : AGitProcess(std::move(config))
 {
 }
 

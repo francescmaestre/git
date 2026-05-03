@@ -1,4 +1,4 @@
-#include "RevisionFiles.h"
+#include <RevisionFiles.h>
 
 RevisionFiles::RevisionFiles(const QString &diff, bool cached)
 {

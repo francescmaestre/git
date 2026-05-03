@@ -1,7 +1,7 @@
-#include "GitAsyncProcess.h"
+#include <GitAsyncProcess.h>
 
-GitAsyncProcess::GitAsyncProcess(const QString &workingDir)
-   : AGitProcess(workingDir)
+GitAsyncProcess::GitAsyncProcess(GitRepoConfig config)
+   : AGitProcess(std::move(config))
 {
 }
 

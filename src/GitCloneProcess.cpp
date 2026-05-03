@@ -1,7 +1,7 @@
-#include "GitCloneProcess.h"
+#include <GitCloneProcess.h>
 
-GitCloneProcess::GitCloneProcess(const QString &workingDir)
-   : AGitProcess(workingDir)
+GitCloneProcess::GitCloneProcess(GitRepoConfig config)
+   : AGitProcess(std::move(config))
 {
    connect(this, &AGitProcess::readyReadStandardError, this, &GitCloneProcess::onReadyStandardError,
            Qt::DirectConnection);
@@ -22,8 +22,8 @@ void GitCloneProcess::onReadyStandardError()
 
       if (errStr.contains("fatal:"))
       {
-          mCanceling = true;
-          emit signalCloningFailure(-1, errStr);
+         mCanceling = true;
+         emit signalCloningFailure(-1, errStr);
       }
       else if (!errStr.startsWith("remote: "))
       {

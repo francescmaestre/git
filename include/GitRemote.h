@@ -3,10 +3,9 @@
 /****************************************************************************************
  ** GitQlient is an application to manage and operate one or several Git repositories. With
  ** GitQlient you will be able to add commits, branches and manage all the options Git provides.
- ** Copyright (C) 2021  Francesc Martinez
+ ** Copyright (C) 2021  Francesc Maestre
  **
- ** LinkedIn: www.linkedin.com/in/cescmm/
- ** Web: www.francescmm.com
+ ** LinkedIn: https://www.linkedin.com/in/francescmaestre/
  **
  ** This program is free software; you can redistribute it and/or
  ** modify it under the terms of the GNU Lesser General Public
@@ -37,8 +36,8 @@ public:
    GitExecResult pushBranch(const QString &branchName, bool force = false);
    GitExecResult push(bool force = false);
    GitExecResult pushCommit(const QString &sha, const QString &remoteBranch);
-   GitExecResult pull(bool updateSubmodulesOnPull = false);
-   bool fetch(bool autoPrune = false);
+   GitExecResult pull();
+   bool fetch();
    bool fetchBranch(const QString &branch) const;
    GitExecResult prune();
    GitExecResult addRemote(const QString &remoteRepo, const QString &remoteName);

@@ -1,8 +1,9 @@
-#include "GitRequestorProcess.h"
+#include <GitRequestorProcess.h>
 
 #include <QTemporaryFile>
-GitRequestorProcess::GitRequestorProcess(const QString &workingDir)
-   : AGitProcess(workingDir)
+
+GitRequestorProcess::GitRequestorProcess(GitRepoConfig config)
+   : AGitProcess(std::move(config))
 {
 }
 

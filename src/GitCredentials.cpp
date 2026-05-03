@@ -1,4 +1,4 @@
-#include "GitCredentials.h"
+#include <GitCredentials.h>
 
 #include <GitBase.h>
 #include <GitConfig.h>

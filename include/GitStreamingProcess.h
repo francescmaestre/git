@@ -22,22 +22,37 @@
  ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  ***************************************************************************************/
 
-#include <GitExecResult.h>
+#include <AGitProcess.h>
 
-#include <QSharedPointer>
-
-class GitBase;
-
-class GitSubmodules
+/**
+ * @brief Runs a git command and emits parsed commit records in batches as they arrive.
+ *
+ * Unlike GitRequestorProcess (which accumulates all output before emitting), this class
+ * connects to readyReadStandardOutput and forwards data in batchSize-record chunks via
+ * batchReady(). When the process exits, any remaining buffered data is flushed and
+ * streamComplete() is emitted so the consumer can finalize its state.
+ *
+ * Intended for git log -z output where records are delimited by '\0'.
+ */
+class GitStreamingProcess : public AGitProcess
 {
-public:
-   GitSubmodules(const QSharedPointer<GitBase> &gitBase);
+    Q_OBJECT
 
-   QVector<QString> getSubmodules();
-   bool submoduleAdd(const QString &url, const QString &name);
-   bool submoduleUpdate(const QString &submodule);
-   bool submoduleRemove(const QString &submodule);
+signals:
+    void batchReady(QByteArray batch);
+    void streamComplete();
+
+public:
+    static constexpr int kDefaultBatchSize = 2000;
+
+    explicit GitStreamingProcess(GitRepoConfig config, int batchSize = kDefaultBatchSize);
+    GitExecResult run(const QString& command) override;
 
 private:
-   QSharedPointer<GitBase> mGitBase;
+    void onFinished(int exitCode, QProcess::ExitStatus exitStatus) override;
+    void accumulate(const QByteArray& data);
+
+    QByteArray mBuffer;
+    int mBatchSize;
+    int mRecordCount = 0;
 };

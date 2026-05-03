@@ -3,10 +3,9 @@
 /****************************************************************************************
  ** GitQlient is an application to manage and operate one or several Git repositories. With
  ** GitQlient you will be able to add commits, branches and manage all the options Git provides.
- ** Copyright (C) 2021  Francesc Martinez
+ ** Copyright (C) 2021  Francesc Maestre
  **
- ** LinkedIn: www.linkedin.com/in/cescmm/
- ** Web: www.francescmm.com
+ ** LinkedIn: https://www.linkedin.com/in/francescmaestre/
  **
  ** This program is free software; you can redistribute it and/or
  ** modify it under the terms of the GNU Lesser General Public
@@ -24,30 +23,25 @@
  ***************************************************************************************/
 
 #include <GitExecResult.h>
+#include <GitRepoConfig.h>
 
 class GitBase final
 {
 public:
-   explicit GitBase(const QString &workingDirectory);
+   explicit GitBase(GitRepoConfig config);
 
    GitExecResult run(const QString &cmd) const;
-
+   GitRepoConfig config() const;
    QString getWorkingDir() const;
-
    void setWorkingDir(const QString &workingDir);
-
    QString getGitDir() const;
-
    QString getTopLevelRepo(const QString &path) const;
-
+   QString gitLocation() const;
    void updateCurrentBranch();
-
    QString getCurrentBranch();
-
    GitExecResult getLastCommit() const;
 
 protected:
-   QString mWorkingDirectory;
-   QString mGitDirectory;
+   GitRepoConfig mConfig;
    QString mCurrentBranch;
 };

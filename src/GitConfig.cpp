@@ -1,10 +1,10 @@
-#include "GitConfig.h"
+#include <GitConfig.h>
 
 #include <GitAsyncProcess.h>
 #include <GitBase.h>
 #include <GitCloneProcess.h>
 
-#include <QLogger.h>
+#include <QLogger>
 
 using namespace QLogger;
 
@@ -78,7 +78,7 @@ bool GitConfig::getUserNameAsync(bool local)
 {
    QLog_Debug("Git", QString("Getting global config"));
 
-   const auto p = new GitAsyncProcess(mGitBase->getWorkingDir());
+   const auto p = new GitAsyncProcess(mGitBase->config());
    connect(p, &GitAsyncProcess::signalDataReady, this, [this, local](GitExecResult ret) {
       if (ret.success)
          emit signalNameReceived(ret.output.trimmed(), local);
@@ -94,7 +94,7 @@ bool GitConfig::getUserEmailAsync(bool local)
 {
    QLog_Debug("Git", QString("Getting global config"));
 
-   const auto p = new GitAsyncProcess(mGitBase->getWorkingDir());
+   const auto p = new GitAsyncProcess(mGitBase->config());
    connect(p, &GitAsyncProcess::signalDataReady, this, [this, local](GitExecResult ret) {
       if (ret.success)
          emit signalEmailReceived(ret.output.trimmed(), local);
@@ -127,7 +127,7 @@ GitExecResult GitConfig::clone(const QString &url, const QString &fullPath)
 {
    QLog_Debug("Git", QString("Starting the clone process for repo {%1} at {%2}.").arg(url, fullPath));
 
-   const auto asyncRun = new GitCloneProcess(mGitBase->getWorkingDir());
+   const auto asyncRun = new GitCloneProcess(mGitBase->config());
    connect(asyncRun, &GitCloneProcess::signalProgress, this, &GitConfig::signalCloningProgress, Qt::DirectConnection);
    connect(asyncRun, &GitCloneProcess::signalCloningFailure, this, &GitConfig::signalCloningFailure,
            Qt::DirectConnection);
